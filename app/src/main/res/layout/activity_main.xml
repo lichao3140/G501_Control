@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <SeekBar
+            android:id="@+id/ledSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:maxHeight="25dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:max="31"/>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Camera powerOn"
+                    android:onClick="cameraPowerOn"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Camera powerOff"
+                    android:onClick="cameraPowerOff"/>
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OTG_CTRL powerOn"
+                    android:onClick="OTGCTRLPowerOn"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OTG_CTRL powerOff"
+                    android:onClick="OTGCTRLPowerOff"/>
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="LAN powerOn"
+                    android:onClick="LANPowerOn"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="LAN powerOff"
+                    android:onClick="LANPowerOff"/>
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="open sensor"
+                    android:onClick="openSensor"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="close sensor"
+                    android:onClick="closeSensor"/>
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RS485 send"
+                    android:onClick="sendRS485"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RS485 receive"
+                    android:onClick="receiveRS485"/>
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="send WG26"
+                    android:onClick="sendWG26"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="send WG34"
+                    android:onClick="sendWG34"/>
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="open Relay"
+                    android:onClick="openRelay"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="close Relay"
+                    android:onClick="closeRelay"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="sensor status:"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:id="@+id/sensorStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="24sp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="card num:"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:id="@+id/cardNum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="24sp"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</ScrollView>
