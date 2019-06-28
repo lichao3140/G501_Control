@@ -17,7 +17,6 @@
 package com.lichao.g501_control;
 
 import java.io.IOException;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,6 +31,7 @@ public class ConsoleActivity extends SerialPortActivity implements View.OnClickL
 
     EditText mReception, emission;
     Button btn_send;
+    String json_str = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +69,28 @@ public class ConsoleActivity extends SerialPortActivity implements View.OnClickL
 
     @Override
     protected void onDataReceived(final byte[] buffer, final int size) {
+
+
+
+
         runOnUiThread(new Runnable() {
             public void run() {
                 if (mReception != null) {
                     mReception.append(new String(buffer, 0, size));
+
+                    String data = new String(buffer, 0, size);
+
+//                    String data = "7B22736E223A22373138383032363131222C22757365724944223A223638222C2273746166664944223A223132222C226175746854797065223A2230222C22757365724E616D65223A22E4BDA0222C226175746854696D65223A22323031392D30362D32362031393A33383A3339222C2249444E4F223A22343330343032313938303131323231353358222C2264757479223A22E9A1B9E79BAEE8B49FE8B4A3E4BABA222C2263657274696669636174696F6E223A22222C2249434E4F223A22222C2270686F746F223A22227D";
+                    //data = data.substring(data.indexOf("7B22"), data.length());//截取字符串
+
+                    json_str = json_str + data.replace(" ", "");
+                    LogUtil.i("zfr_data", "data:" + data);
+
+//                    data = toStringHex(data);//十六进制转字符串 //{"addInfo":{"result_code":"-1","err_code":"NEED_REVERSAL","err_msg":"exchange cups error"}}
+//                    Log.d("zfr_data1:", data);
+
+//                    JsonObject jsonObject = (JsonObject) new JsonParser().parse(data);//GSON解析
+//                    Log.d("zfr_addInfo:", jsonObject.get("addInfo").getAsJsonObject().get("err_code").getAsString());
                 }
             }
         });
@@ -97,5 +115,29 @@ public class ConsoleActivity extends SerialPortActivity implements View.OnClickL
                 }
                 break;
         }
+    }
+
+    /**
+     * 十六进制字符串转换字符串
+     * 35353637 ==> 5567
+     *
+     * @return String
+     */
+    public static String toStringHex(String s) {
+        byte[] baKeyword = new byte[s.length() / 2];
+        for (int i = 0; i < baKeyword.length; i++) {
+            try {
+                baKeyword[i] = (byte) (0xff & Integer.parseInt(s.substring(
+                        i * 2, i * 2 + 2), 16));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            s = new String(baKeyword, "utf-8");// UTF-16le:Not
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return s;
     }
 }
