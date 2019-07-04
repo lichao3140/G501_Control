@@ -17,6 +17,8 @@
 package com.lichao.g501_control;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -114,21 +116,74 @@ public class ConsoleActivity extends SerialPortActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
-                int i;
-                CharSequence t = emission.getText().toString().trim();
-                Log.e("lichao", "emission=" + emission.getText().toString().trim());
-                char[] text = new char[t.length()];
-                for (i = 0; i < t.length(); i++) {
-                    text[i] = t.charAt(i);
-                }
+//                int i;
+//                CharSequence t = emission.getText().toString().trim();
+//                Log.e("lichao", "emission=" + emission.getText().toString().trim());
+//                char[] text = new char[t.length()];
+//                for (i = 0; i < t.length(); i++) {
+//                    text[i] = t.charAt(i);
+//                }
+//                try {
+//                    mOutputStream.write(new String(text).getBytes());
+//                    mOutputStream.write('\n');
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
+                String sOut = emission.getText().toString();
+                byte[] bOutArray = HexToByteArr(sOut);
+                Log.e("lichao", "bOutArray=" + Arrays.toString(bOutArray));
                 try {
-                    mOutputStream.write(new String(text).getBytes());
-                    mOutputStream.write('\n');
+                    mOutputStream.write(bOutArray);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
         }
+    }
+
+    /**
+     * 转hex字符串转字节数组
+     * @param inHex
+     * @return
+     */
+    public static byte[] HexToByteArr(String inHex) {
+        String inHex_trim = inHex.replace(" ", "");
+        int hexlen = inHex_trim.length();
+        byte[] result;
+        if (isOdd(hexlen)==1)
+        {//奇数
+            hexlen++;
+            result = new byte[(hexlen/2)];
+            inHex_trim="0"+inHex_trim;
+        }else {//偶数
+            result = new byte[(hexlen/2)];
+        }
+        int j=0;
+        for (int i = 0; i < hexlen; i+=2)
+        {
+            result[j]=HexToByte(inHex_trim.substring(i, i+2));
+            j++;
+        }
+        return result;
+    }
+
+    /**
+     * 判断奇数或偶数，位运算，最后一位是1则为奇数，为0是偶数
+     * @param num
+     * @return
+     */
+    public static int isOdd(int num) {
+        return num & 0x1;
+    }
+
+    /**
+     * Hex字符串转int
+     * @param inHex
+     * @return
+     */
+    public static byte HexToByte(String inHex) {
+        return (byte)Integer.parseInt(inHex,16);
     }
 
     /**
