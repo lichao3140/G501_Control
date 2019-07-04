@@ -73,9 +73,17 @@ public class ConsoleActivity extends SerialPortActivity implements View.OnClickL
     @Override
     protected void onDataReceived(final byte[] buffer, final int size) {
 
-        String data = new String(buffer, 0, size);
+        byte[] bRec = new byte[size];
+        for (int i = 0; i < size; i++) {
+            bRec[i] = buffer[i];
+        }
 
-        json_str = json_str + data.replace(" ", "");
+        StringBuilder sMsg = new StringBuilder();
+        sMsg.append(ByteArrToHex(bRec));
+
+        LogUtil.i("zfr_data", "sMsg:" + sMsg);
+
+        json_str = json_str + sMsg.toString().replace(" ", "");
         temp_str = json_str.substring(4, json_str.length());
         json_length = temp_str.substring(2, 6);
         value_ten = Integer.parseInt(json_length,16);
@@ -121,6 +129,31 @@ public class ConsoleActivity extends SerialPortActivity implements View.OnClickL
                 }
                 break;
         }
+    }
+
+    /**
+     * 1字节转2个Hex字符
+     * @param inByte
+     * @return
+     */
+    public static String Byte2Hex(Byte inByte) {
+        return String.format("%02x", inByte).toUpperCase();
+    }
+
+    /**
+     * 字节数组转转hex字符串
+     * @param inBytArr
+     * @return
+     */
+    public static String ByteArrToHex(byte[] inBytArr) {
+        StringBuilder strBuilder=new StringBuilder();
+        int j=inBytArr.length;
+        for (int i = 0; i < j; i++)
+        {
+            strBuilder.append(Byte2Hex(inBytArr[i]));
+            strBuilder.append(" ");
+        }
+        return strBuilder.toString();
     }
 
     /**
